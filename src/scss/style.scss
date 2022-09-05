@@ -5,34 +5,38 @@
 body {
     background-color: rgb(132, 11, 117);
 }
-.todo-add__input {
-    border-color: rgba(200, 200, 200, 0.9);
-    color:rgb(132, 11, 117);
+
+.todo-add {
+    &__input {
+        border-color: rgba(200, 200, 200, 0.9);
+        color:rgb(132, 11, 117); 
+    }
+    &__input:focus {
+        outline:none; 
+        box-shadow:inset 1px 1px 10px rgba(221, 82, 196, 0.7);
+    }
+    &__button {
+        background-color: rgb(182, 23, 168);
+        border-color:rgb(209, 28, 229);
+        color:aliceblue;
+        padding: 1px 10px;
+    }
+    &__ul {
+        max-width: 410px;
+    }
 }
-.todo-add__input:focus {
-    outline:none; 
-    box-shadow:inset 1px 1px 10px rgba(221, 82, 196, 0.7);
-}
-.todo-add__button {
-    background-color: rgb(182, 23, 168);
-    border-color:rgb(209, 28, 229);
-    color:aliceblue;
-    padding: 1px 10px;
-}
-.todo-add__ul {
-    max-width: 410px;
-}
+
 .todo {
     margin-top: 10px;
     display:flex;
     justify-content: space-between;
-}
-.todo__span {
-    color: aliceblue;
-}
-.todo__delete {
-    background-color:  rgb(182, 23, 168);
-    border-color:rgb(209, 28, 229);
-    color:aliceblue;
-    padding: 1px 10px;
+    &__span {
+        color: aliceblue; 
+    }
+    &__delete {
+        background-color:  rgb(182, 23, 168);
+        border-color:rgb(209, 28, 229);
+        color:aliceblue;
+        padding: 1px 10px;
+    }
 }
