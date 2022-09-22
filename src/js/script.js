@@ -8,7 +8,6 @@ const todoTemplate = document.querySelector('#todo-template').content,
       todoUl = document.querySelector('.todo-add__ul');
 
 let todoArray = [];
-let counter = 0;
 
 init();
 
@@ -27,26 +26,26 @@ todoUl.addEventListener('click', (e) => {
         for(let i = 0; i < todoArray.length; i++) {
             if (JSON.parse(todoArray[i]).id == e.target.id){
                 todoArray.splice(i, 1);
-                localStorage.setItem('todo',todoArray);
+                localStorage.setItem('todo', todoArray);
+                init();
             }
         }
     }
 });
 
 function addAll(value) {
-    addTodo(value);
     const todoObject = {
-        id: counter,
+        id: todoArray.length + 1,
         text: value
     };
-    counter++;
     todoArray.push(JSON.stringify(todoObject));
+    addTodo(value, todoArray.length);
     localStorage.setItem('todo', todoArray);
 }
 
-function addTodo(value) {
+function addTodo(value, id) {
     todoSpan.innerHTML = value;
-    todoDelete.id = counter;
+    todoDelete.id = id;
     let templateCopy = todoTemplate.cloneNode(true);
     todoUl.append(templateCopy);
 }
@@ -55,14 +54,21 @@ function init() {
     const fromLocalStorage = localStorage.getItem('todo');
     if(fromLocalStorage) {
         todoArray = fromLocalStorage.replace(/},/g,'}  ').split('  ');
-        const todoArrayParse = [];
+        let todoArrayParse = [];
+        if (todoUl.innerHTML.trim().length !== 0){
+            todoUl.innerHTML = '';
+        }
         for(let i = 0; i < todoArray.length; i++) {
             todoArrayParse.push(JSON.parse(todoArray[i]));
-            addTodo(todoArrayParse[i].text);
-            todoArrayParse[i].id = counter;
-            counter++;
+            if (i === 0) {
+                addTodo(todoArrayParse[i].text, 1);
+                todoArrayParse[i].id = 1;
+            } else {
+                addTodo(todoArrayParse[i].text, todoArrayParse.length);
+                todoArrayParse[i].id = todoArrayParse.length;
+            }
         }
-        todoArray = [];
+        todoArray.length = 0;
         for(let i = 0; i < todoArrayParse.length; i++) {
             todoArray.push(JSON.stringify(todoArrayParse[i]));
         }
